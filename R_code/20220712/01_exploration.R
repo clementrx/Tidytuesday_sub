@@ -43,7 +43,7 @@ ggplot(data = world) +
              aes(x=longitude, y=latitude, color = tot))
 
 ggsave("first_test.png", 
-       width = 5, height = 3) 
+       width = 2, height = 2) 
 
 
 
