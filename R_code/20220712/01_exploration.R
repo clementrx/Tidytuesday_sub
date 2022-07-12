@@ -45,7 +45,7 @@ ggplot(data = world) +
   scale_color_viridis()
 
 ggsave(paste0(currt_direct, '/plot/', date_file, "/first_test.png"), 
-       width = 10, height = 10) 
+       width = 5, height = 5) 
 
 
 
