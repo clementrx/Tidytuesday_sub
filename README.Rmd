@@ -1,0 +1,25 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  message = FALSE
+)
+suppressPackageStartupMessages(library(ggplot2))
+theme_set(theme_light())
+```
+
+# My TidyTuesday contribution
+
+**Authors:** [Clément Rieux](https://github.com/clementrx)
+
+
+![20210712](https://github.com/clementrx/Tidytuesday_sub/plot/20220712/first_test.png)
