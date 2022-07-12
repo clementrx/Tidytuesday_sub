@@ -42,8 +42,8 @@ ggplot(data = world) +
   geom_point(data= flights_plot,
              aes(x=longitude, y=latitude, color = tot))
 
-ggsave("first_test_bis.png", 
-       width = 15, height = 9) 
+ggsave("first_test.png", 
+       width = 5, height = 3) 
 
 
 

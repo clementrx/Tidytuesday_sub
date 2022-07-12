@@ -5,4 +5,4 @@
 
 **Authors:** [Clément Rieux](https://github.com/clementrx)
 
-![./plot\_png/20210712/first\_test.png](https://github.com/clementrx/Tidytuesday_sub/tree/main/plot/20220712)
+![./plot\_png/20210712/first\_test.png](https://github.com/clementrx/Tidytuesday_sub/tree/main/plot/20220712/first_test.png)
