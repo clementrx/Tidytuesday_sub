@@ -22,4 +22,4 @@ theme_set(theme_light())
 **Authors:** [Clément Rieux](https://github.com/clementrx)
 
 
-![./plot/20210712/first_test.png](https://github.com/clementrx/Tidytuesday_sub/tree/main/plot/20220712/first_test.png)
+![./plot/20210712/first_test.png](https://github.com/clementrx/Tidytuesday_sub/plot/20220712/first_test.png)
