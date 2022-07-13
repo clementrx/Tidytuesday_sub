@@ -26,26 +26,83 @@ flights = flights %>%
 flights$latitude = as.numeric(flights$latitude)
 flights$longitude = as.numeric(flights$longitude)
 
-flights_plot = flights %>% filter(FLT_DATE == as.POSIXct('2022-05-31', tz = 'UTC'),
-                                  STATE_NAME == 'France',
-                                  !grepl("Paris",APT_NAME))
+
+flights_plot = flights %>% filter(FLT_DATE == as.POSIXct('2022-05-31', tz = 'UTC'))#,
+                                  # STATE_NAME == 'France',
+                                  # !grepl("Paris",APT_NAME))
        
 library("sf") 
 library("rnaturalearth")
 library("rnaturalearthdata")
 
-world <- ne_countries(scale = "medium", returnclass = "sf")
-eu = world %>% filter(continent == "Europe")
+# crs_use = "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+crs_use = "+proj=robin"
 
-ggplot(data = world) +
-  geom_sf() + 
-  coord_sf(ylim = c(41.77, 53.83), xlim = c(-6.26, 9.97), expand = FALSE) +
-  geom_point(data= flights_plot,
-             aes(x=longitude, y=latitude, color = tot)) +
-  scale_color_viridis()
+sf_europe <- st_as_sf(rworldmap::getMap(resolution = "high")) %>% 
+  st_transform(crs = crs_use) %>%
+  # filter(REGION == "Europe") %>% 
+  st_crop(xmin = -4000000, xmax = 4300000, ymin = 2500000, ymax = 9000000) %>%
+  mutate(
+    area = st_area(geometry),
+    centroid = st_centroid(geometry)
+  ) %>% 
+  dplyr::select(SOVEREIGNT, GLOCAF, area, centroid)
+
+
+d_points <- flights_plot %>% 
+  filter(is.na(longitude) == F,
+         is.na(latitude) == F) %>% 
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) %>% 
+  st_transform(crs = crs_use)
+
+
+library(RColorBrewer)
+
+
+nb_groupe <- length(unique(d_points$STATE_NAME))
+mycolors <- rep(colorRampPalette(brewer.pal(8, "Paired"))(nb_groupe))
+
+match_col <- data.frame(unique(d_points$STATE_NAME), mycolors)
+match_col <- match_col %>% rename(STATE_NAME = unique.d_points.STATE_NAME.)
+
+d_points = d_points %>% 
+  left_join(match_col)
+
+mytheme <- theme(text = element_text(family = 'Avenir')
+                 # ,panel.grid.major = element_line(color = '#cccccc' 
+                 #                                  ,linetype = 'dashed'
+                 #                                  ,size = .3
+                 # )
+                 ,panel.grid.major = element_line(colour = "transparent")
+                 ,panel.background = element_rect(fill = 'aliceblue')
+                 ,plot.title = element_text(size = 32)
+                 ,plot.subtitle = element_text(size = 14)
+                 ,axis.title = element_blank()
+                 ,axis.text = element_blank()
+                 ,axis.ticks = element_blank()
+)
+
+map <- ggplot(sf_europe) +
+  rcartocolor::scale_fill_carto_c(palette = "BluYl") +
+  geom_sf(color = "grey85",
+          fill = "grey90",
+          lwd = 0.1) +
+  geom_sf(data= d_points,
+             aes(color = mycolors,
+                 alpha = tot,
+                 size = tot)) +
+  # scale_color_viridis() +
+  # scale_x_continuous(expand = c(0, 0),
+  #                    limits = c(-3300000, NA)) +
+  # scale_y_continuous(expand = c(0.02, 0.02)) +
+  mytheme + 
+  # theme_void() + 
+  theme(plot.margin = margin(0, 0, 0, 0)) +
+  guides(color="none",
+         alpha = 'none', 
+         size = 'none')
+
+map
 
 ggsave(paste0(currt_direct, '/plot/', date_file, "/first_test.png"), 
        width = 5, height = 5) 
-
-
-
