@@ -193,5 +193,5 @@ p <- ggplot(top5_airport_cntrt, aes(x=as.factor(id), y=Total)) +       # Note th
 
 p
 
-ggsave(paste0(currt_direct, '/plot/', date_file, "/traffic_by_ariport_2021.png"), 
+ggsave(paste0(currt_direct, '/plot/', date_file, "/traffic_by_airport_2021.png"), 
        width = 10, height = 10) 
