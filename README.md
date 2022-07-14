@@ -6,4 +6,4 @@
 **Authors:** [Clément Rieux](https://github.com/clementrx)
 
 ![20220712](https://github.com/clementrx/Tidytuesday_sub/blob/main/plot/20220712/airport_traffic_map.png)
-![](https://github.com/clementrx/Tidytuesday_sub/blob/main/plot/20220712/traffic_by_airport_2021.png)
+![20220712](https://github.com/clementrx/Tidytuesday_sub/blob/main/plot/20220712/traffic_by_airport_2021.png)
