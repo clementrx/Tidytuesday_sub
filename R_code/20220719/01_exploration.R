@@ -102,4 +102,4 @@ ggplot(df_plot_perc,
 
   
 ggsave(paste0(currt_direct, '/plot/', date_file, "/electricity_adoption.png"), 
-       width = 10, height = 10) 
+       width = 8, height = 8) 
