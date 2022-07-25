@@ -53,13 +53,12 @@ mytheme <- theme(text = element_text(family = 'Avenir')
                  # )
                  ,panel.grid = element_line(colour = "transparent")
                  ,panel.background = element_rect(fill = 'lightblue')
-                 # ,plot.title = element_text(size = 32)
                  # ,plot.subtitle = element_text(size = 14)
                  # axis.title = element_blank()
                  # axis.text = element_blank()
                  # axis.ticks = element_blank()
                  ,axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
-                 ,plot.title = element_text(hjust = 0.1)
+                 ,plot.title = element_text(hjust = 0.1, size = 20)
                  ,plot.caption.position = "plot"
                  ,plot.caption = element_text(vjust = 5, size = 8, hjust = 0.5)
                  # ,legend.position = 'none'
@@ -75,7 +74,7 @@ ggplot(df_plot_perc,
            group = label)) +
   geom_area(position = "stack",size = 0)+
   scale_fill_viridis(discrete=TRUE, option = "G") +
-  scale_y_continuous(name = "Electricity (TWH)", labels = scales::percent) + 
+  scale_y_continuous(name = "", labels = scales::percent) + 
                      # breaks = seq(from = 0, to = 600, by = 100)) +  
   scale_x_continuous(name = '', breaks = seq(from = 1985, to = 2020, by = 5)) + 
   labs(
