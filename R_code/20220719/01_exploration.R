@@ -14,31 +14,7 @@ df <- tuesdata$technology
 # clean it
 df_plot = df %>% 
   filter(group == 'Production',
-         # iso3c %in% c('ALB',
-         #              'DEU',
-         #              'AND',
-         #              'AUT',
-         #              'BEL',
-         #              'BLR',
-         #              'BIH',
-         #              'BGR',
-         #              'CYP',
-         #              'HRV',
-         #              'DNK',
-         #              'ESP',
-         #              'EST',
-         #              'FIN',
-         #              'FRA',
-         #              'GRC',
-         #              'HUN',
-         #              'IRL',
-         #              'ISL',
-         #              'ITA',
-         #              'KA',
-         #              'LIE',
-         #              'LTU'
-         # ),
-         iso3c %in% c('FRA', 'DEU', 'ESP', 'ITA', 'GBR', 'BEL'),
+         iso3c %in% c('FRA', 'DEU', 'ESP', 'ITA', 'GBR', 'USA', 'RUS', 'CHN', 'SWE'),
          category == 'Energy',
          grepl('from', label)) %>% 
   mutate(label = gsub('(TWH)', '', label),
@@ -48,7 +24,10 @@ df_plot = df %>%
                            iso3c == "ESP" ~ "Espagne",
                            iso3c == "ITA" ~ "Italie",
                            iso3c == "GBR" ~ "Angleterre",
-                           iso3c == "BEL" ~ "Belgique",
+                           iso3c == "USA" ~ "USA",
+                           iso3c == "RUS" ~ "Russia",
+                           iso3c == "CHN" ~ "China",
+                           iso3c == 'SWE' ~ "Sweden",
                            TRUE ~ as.character(iso3c)))
 
 df_plot_perc = df_plot %>% 
@@ -65,24 +44,6 @@ df_plot_perc = df_plot %>%
     ungroup() #%>% 
     # mutate(label.x = fct_reorder(label, end),
            # label_rev = fct_rev(label.x))
-
-
-ggplot(df_plot_perc,
-       aes(x = year, y = Total, color = label, fill = label,
-           group = label)) +
-  # geom_point() +
-  # geom_line() + 
-  geom_area(position = "stack",size = 0)+
-  scale_fill_viridis(discrete=TRUE, option = "D") +
-  scale_y_continuous(name = "Electricity (TWH)", 
-                     breaks = seq(from = 0, to = 600, by = 100)) +  
-  scale_x_continuous(name = '', breaks = seq(from = 1985, to = 2020, by = 5)) + 
-  labs(
-    title = "Source from electricity",
-    caption = "Data : Technology (TidyTuesday)\nGraphic: Clément Rieux") +
-  mytheme +
-  facet_wrap(.~iso3c)
-  
 
 # theme
 mytheme <- theme(text = element_text(family = 'Avenir')
@@ -102,9 +63,43 @@ mytheme <- theme(text = element_text(family = 'Avenir')
                  ,plot.caption.position = "plot"
                  ,plot.caption = element_text(vjust = 5, size = 8, hjust = 0.5)
                  # ,legend.position = 'none'
-                 # ,legend.text = element_text(size=6)
-                 # ,legend.key.size = unit(0.5, 'cm')
+                 ,legend.text = element_text(size=6)
+                 ,legend.title = element_blank()
+                 ,legend.key.size = unit(0.5, 'cm')
+                 ,strip.background = element_blank()
 )
 
-ggsave(paste0(currt_direct, '/plot/', date_file, "/airport_traffic_map.png"), 
-       width = 10, height = 8) 
+
+ggplot(df_plot_perc,
+       aes(x = year, y = perc, color = label, fill = label,
+           group = label)) +
+  geom_area(position = "stack",size = 0)+
+  scale_fill_viridis(discrete=TRUE, option = "G") +
+  scale_y_continuous(name = "Electricity (TWH)", labels = scales::percent) + 
+                     # breaks = seq(from = 0, to = 600, by = 100)) +  
+  scale_x_continuous(name = '', breaks = seq(from = 1985, to = 2020, by = 5)) + 
+  labs(
+    title = "Where does the electricity come from ?",
+    caption = "Data : Technology Adoption (TidyTuesday)\nGraphic: Clément Rieux") +
+  mytheme +
+  facet_wrap(.~iso3c)
+
+# fr = df_plot_perc %>% filter(year == "2020",
+#                         iso3c == 'France') %>% 
+#   # Basic piechart
+#   ggplot(aes(x="", y=perc, fill=label)) +
+#   geom_bar(stat="identity", width=1, position = "stack") +
+#   coord_polar("y", start=0) +
+#   scale_fill_viridis(discrete=TRUE, option = "G") +
+#   geom_text(aes(x = 1.6, 
+#                 label = scales::percent(perc, accuracy = .1)), 
+#             position = position_stack(vjust = .6),
+#             size = 3) +
+#   theme(axis.text = element_blank(), 
+#         axis.title = element_blank(),
+#         legend.position="none",
+#         panel.background = element_rect(fill = 'white')) 
+
+  
+ggsave(paste0(currt_direct, '/plot/', date_file, "/electricity_adoption.png"), 
+       width = 10, height = 10) 
