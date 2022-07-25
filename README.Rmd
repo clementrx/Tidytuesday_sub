@@ -21,7 +21,7 @@ theme_set(theme_light())
 
 **Authors:** [Clément Rieux](https://github.com/clementrx)
 
-## [20220712](https://github.com/clementrx/tidytuesday/tree/master/data/2022/2022-07-12)
+## [20220712 - European flights](https://github.com/clementrx/tidytuesday/tree/master/data/2022/2022-07-12)
 
 ![20220712](https://github.com/clementrx/Tidytuesday_sub/blob/main/plot/20220712/airport_traffic_map.png)
 ![20220712](https://github.com/clementrx/Tidytuesday_sub/blob/main/plot/20220712/traffic_by_airport_2021.png)
